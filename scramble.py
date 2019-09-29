@@ -35,7 +35,8 @@ random.shuffle(listGenWords)
 newLines = []
 fileHead = []  ##A list of all YOUR macros
 startFlag=0
-usedDefines = set()
+usedDefines = []
+usedKeyWords = []
 
 for line in lines:
     ##Remember //start indicates the start of your actual program (after all of YOUR macros)
@@ -49,17 +50,23 @@ for line in lines:
         if len(found_keywords_in_line) == 0:
             newLines.append(line)
             continue
-        print(found_keywords_in_line)
+
+        for found_keyword_in_line in found_keywords_in_line:
+            usedKeyWords.append(found_keyword_in_line)
+
         for keyword in found_keywords_in_line:
-            usedDefines.add(listGenWords[keywords.index(keyword)])
+            usedDefines.append(listGenWords[keywords.index(keyword)])
             line = re.sub(keyword,listGenWords[keywords.index(keyword)],line)  ##This version only substitutes the required keyword
+
+        print(usedKeyWords)
         print(usedDefines)
 
     newLines.append(line)
 
 defLines = []  ##This is the list of all new macros
-for i,keyword in enumerate(keywords):
-    defLines.append("#define " + listGenWords[i] + " " + keyword + "\n")
+for i, usedDefine in enumerate(usedDefines):
+    defLines.append("#define " + usedDefine + " " + usedKeyWords[i] + "\n")
+    pass
 
 with open(file+'Yeet.cpp','w') as f:   ##A new file will be created with suffix 'Yeet'
     for i in fileHead:
