@@ -44,8 +44,10 @@ for line in lines:
     else:
         startFlag=1
     if startFlag==1:
-        for i,keyword in enumerate(keywords):
-            line = re.sub(keyword,listGenWords[i],line)  ##This version only substitutes the required keyword
+        found_keywords_in_line = [keyword for keyword in keywords if(keyword in line)]
+        print(found_keywords_in_line)
+        for keyword in found_keywords_in_line:
+            line = re.sub(keyword,listGenWords[keywords.index(keyword)],line)  ##This version only substitutes the required keyword
 
     newLines.append(line)
 
