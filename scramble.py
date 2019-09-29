@@ -35,6 +35,7 @@ random.shuffle(listGenWords)
 newLines = []
 fileHead = []  ##A list of all YOUR macros
 startFlag=0
+usedDefines = set()
 
 for line in lines:
     ##Remember //start indicates the start of your actual program (after all of YOUR macros)
@@ -45,9 +46,14 @@ for line in lines:
         startFlag=1
     if startFlag==1:
         found_keywords_in_line = [keyword for keyword in keywords if(keyword in line)]
+        if len(found_keywords_in_line) == 0:
+            newLines.append(line)
+            continue
         print(found_keywords_in_line)
         for keyword in found_keywords_in_line:
+            usedDefines.add(listGenWords[keywords.index(keyword)])
             line = re.sub(keyword,listGenWords[keywords.index(keyword)],line)  ##This version only substitutes the required keyword
+        print(usedDefines)
 
     newLines.append(line)
 
