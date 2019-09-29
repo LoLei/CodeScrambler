@@ -39,6 +39,7 @@ usedDefines = []
 usedKeyWords = []
 
 for line in lines:
+    print(line) 
     ##Remember //start indicates the start of your actual program (after all of YOUR macros)
     if(line != "//start\n" and startFlag==0):
         fileHead.append(line)
@@ -46,15 +47,15 @@ for line in lines:
     else:
         startFlag=1
     if startFlag==1:
-        found_keywords_in_line = [keyword for keyword in keywords if(keyword in line)]
-        if len(found_keywords_in_line) == 0:
+        foundKeywordsInLine = [keyword for keyword in keywords if(keyword in line)]
+        if len(foundKeywordsInLine) == 0:
             newLines.append(line)
             continue
 
-        for found_keyword_in_line in found_keywords_in_line:
-            usedKeyWords.append(found_keyword_in_line)
+        for foundKeywordInLine in foundKeywordsInLine:
+            usedKeyWords.append(foundKeywordInLine)
 
-        for keyword in found_keywords_in_line:
+        for keyword in foundKeywordsInLine:
             usedDefines.append(listGenWords[keywords.index(keyword)])
             line = re.sub(keyword,listGenWords[keywords.index(keyword)],line)  ##This version only substitutes the required keyword
 
@@ -66,7 +67,6 @@ for line in lines:
 defLines = []  ##This is the list of all new macros
 for i, usedDefine in enumerate(usedDefines):
     defLines.append("#define " + usedDefine + " " + usedKeyWords[i] + "\n")
-    pass
 
 with open(file+'Yeet.cpp','w') as f:   ##A new file will be created with suffix 'Yeet'
     for i in fileHead:
