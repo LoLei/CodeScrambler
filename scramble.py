@@ -35,8 +35,8 @@ random.shuffle(listGenWords)
 newLines = []
 fileHead = []  ##A list of all YOUR macros
 startFlag=0
-usedDefines = []
 usedKeyWords = []
+usedDefines = []
 
 for line in lines:
     print(line) 
@@ -64,9 +64,15 @@ for line in lines:
 
     newLines.append(line)
 
+##Remove duplicates
+uniqueUsedKeywords = list(dict.fromkeys(usedKeyWords))
+print(uniqueUsedKeywords)
+uniqueUsedDefines = list(dict.fromkeys(usedDefines))
+print(uniqueUsedDefines)
+
 defLines = []  ##This is the list of all new macros
-for i, usedDefine in enumerate(usedDefines):
-    defLines.append("#define " + usedDefine + " " + usedKeyWords[i] + "\n")
+for i, uniqueUsedDefine in enumerate(uniqueUsedDefines):
+    defLines.append("#define " + uniqueUsedDefine + " " + uniqueUsedKeywords[i] + "\n")
 
 with open(file+'Yeet.cpp','w') as f:   ##A new file will be created with suffix 'Yeet'
     for i in fileHead:
