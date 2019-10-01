@@ -39,7 +39,6 @@ usedKeyWords = []
 usedDefines = []
 
 for line in lines:
-    print(line) 
     ##Remember //start indicates the start of your actual program (after all of YOUR macros)
     if(line != "//start\n" and startFlag==0):
         fileHead.append(line)
@@ -59,16 +58,11 @@ for line in lines:
             usedDefines.append(listGenWords[keywords.index(keyword)])
             line = re.sub(keyword,listGenWords[keywords.index(keyword)],line)  ##This version only substitutes the required keyword
 
-        print(usedKeyWords)
-        print(usedDefines)
-
     newLines.append(line)
 
 ##Remove duplicates
 uniqueUsedKeywords = list(dict.fromkeys(usedKeyWords))
-print(uniqueUsedKeywords)
 uniqueUsedDefines = list(dict.fromkeys(usedDefines))
-print(uniqueUsedDefines)
 
 defLines = []  ##This is the list of all new macros
 for i, uniqueUsedDefine in enumerate(uniqueUsedDefines):
